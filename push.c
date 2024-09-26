@@ -7,7 +7,6 @@
 void _push(stack_t **stack, __attribute__ ((unused))unsigned int line_number)
 {
 	stack_t *top;
-	(void)line_number;
 
 	top = malloc(sizeof(stack_t));
 	if (top == NULL)
@@ -19,6 +18,7 @@ void _push(stack_t **stack, __attribute__ ((unused))unsigned int line_number)
 	top->n = var_global.push_arg;
 	top->next = *stack;
 	top->prev = NULL;
+	
 	if (*stack != NULL)
 		(*stack)->prev = top;
 	*stack = top;
@@ -70,7 +70,7 @@ void _pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *nodo = *stack;
 
-	if (stack == NULL || *stack == NULL)
+	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
