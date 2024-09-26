@@ -9,17 +9,21 @@ var_global_t var_global;
  */
 int main(int ac, char **av)
 {
-	stack_t *stack;
+	stack_t *stack = NULL;
 
-	stack = NULL;
 	if (ac != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
-	read_file(av[1], &stack);
-    /* recordar liberar memorias */
+	if (read_file(av[1], &stack) != 0)
+	{
+		fprintf(stderr, "Error: Unable to read the file %s\n", av[1]);
+		free_dlistint(stack);
+		return (EXIT_FAILURE);
+	}
+
 	free_dlistint(stack);
-	return (0);
+	return (EXIT_SUCCESS);
 }
